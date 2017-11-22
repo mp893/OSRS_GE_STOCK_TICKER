@@ -6,8 +6,13 @@
     - Almost entirely a manual system, but the ticking capability is there
     - I do not plan on updating/fixing/enhancing this version 
     
- - In progress Netty IO java backend
+ - In progress Vertx java backend
     - Fetching to become on demand
     - Perhaps internal rest calls?
     
+    ## Changelog:
+      - 1.0
+        - Mavenized
+        - Converted first set of handlers and request client files from Netty to Vertx
+          - *this uses Netty but does a lot of the setup*
  - I also plan on making some sort of web based front end in the future
