@@ -1,0 +1,58 @@
+@keyframes glow {
+  from {box-shadow: 0px 0px 25px #00ff00;
+        text-shadow: -6px 0px 40px #00cc00, 3px 0px 2px #008800, 3px 0px 40px #00cc00;}
+  to {box-shadow: 0px 0px 35px #00ff00;
+      text-shadow: -6px 0px 70px #00cc00, 3px 0px 2px #008800, 3px 0px 70px #00cc00;}
+}
+
+.title {
+   background-color: #262626;
+   border: 4px inset #008900;
+   border-left: hidden;
+   border-right: hidden;
+   box-shadow: 0px 0px 20px #00ff00;
+   -moz-animation: glow 3s; /* Firefox */
+   -webkit-animation: glow 3s; /* Safari and Chrome */
+   -webkit-animation-timing-function: ease-in-out;
+   -moz-animation-timing-function: ease-in-out;
+   -webkit-animation-iteration-count: infinite;
+   -moz-animation-iteration-count: infinite;
+   -webkit-animation-direction: alternate;
+   -moz-animation-direction: alternate;
+}
+/*originally for the title, but I liked how it looked so the whole thing became haunted*/
+.tital_font {
+  font-family: monospace;
+  color: #00b33c;
+  font-style: oblique;
+  text-shadow: -6px 0px 40px #00cc00, 3px 0px 2px #008800, 3px 0px 40px #00cc00;
+}
+
+.normie_font {
+  font-family: monospace;
+  color: #004d00;
+  font-weight: 900;
+}
+
+.text_align{
+  text-align: center;
+}
+
+.pad_top{
+  padding-top: 5px;
+}
+
+.default_text {
+  font-size: 14px;
+}
+
+input[type=text] {
+    border: 2px solid #00cc00;
+    background-color: #b3b3b3;
+    border-radius: 4px;
+    box-shadow: 0px 0px 25px #00cc00;
+}
+
+input[type=text]:focus {
+  background-color: #bfbfbf;
+}

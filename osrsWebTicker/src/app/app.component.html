@@ -1,0 +1,14 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="title tital_font text_align pad_top">
+  <h1>
+    {{title}}
+  </h1>
+</div>
+<div class="text_align pad_top" style="padding-top:20px">
+  <label class="tital_font default_text"> Enter the name of a tradeable item</label>
+  <div>
+    <ng-autocomplete [classes]="['']" [group]="group" (keyup)="onKey($event)"></ng-autocomplete>
+  </div>
+  <datalist id="users" >
+  </datalist>
+</div>
