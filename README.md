@@ -1,11 +1,11 @@
 # OSRS_GE_STOCK_TICKER
 
- - Currently the only functioning version is a Swing java/POJO java version 
+ - Currently the only functioning version is a Swing java/POJ version 
     - Requires the user to know the item ID in order to search
     - Has a simple item library building capacity, but this can be quite time consuming even though it is multithreaded
     - Almost entirely a manual system, but the ticking capability is there
     - I do not plan on updating/fixing/enhancing this version 
-    
+       
  - In progress:
  
      - ~~Vertx java backend
@@ -19,7 +19,7 @@
         - Set up and wired up basic rest service of web client version
         - Support for Desktop version will be terminated
           - *acess to a new more efficent api allows for a simpler client*
-          - *no need to write a server for simple data manipulation
+          - *no need to write a server for simple data manipulation*
           
       - 1.0
         - Mavenized
