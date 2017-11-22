@@ -18,7 +18,7 @@
         - Created skeleton for Angular 5 version
         - Set up and wired up basic rest service of web client version
         - Support for Desktop version will be terminated
-          - *acess to a new more efficent api allows for a simpler client*
+          - *access to a new more efficent api allows for a simpler client*
           - *no need to write a server for simple data manipulation*
           
       - 1.0
