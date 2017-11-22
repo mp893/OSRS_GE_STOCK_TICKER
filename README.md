@@ -8,9 +8,9 @@
        
  - In progress:
  
-     - ~~Vertx java backend
-    - Fetching to become on demand
-    - Perhaps internal rest calls?~~
+     - ~~Vertx java backend~~
+    - ~~Fetching to become on demand~~
+    - ~~Perhaps internal rest calls?~~
      - Angular 5 web client
     
     ## Changelog:
