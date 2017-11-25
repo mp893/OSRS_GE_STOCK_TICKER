@@ -7,8 +7,8 @@
 <div class="text_align pad_top" style="padding-top:20px">
   <label class="tital_font default_text"> Enter the name of a tradeable item</label>
   <div>
-    <ng-autocomplete [classes]="['']" [group]="group" (keyup)="onKey($event)"></ng-autocomplete>
+    <input type="text" list="items" (keyup)="onKey($event)"/>
   </div>
-  <datalist id="users" >
+  <datalist #dataList id="items" >
   </datalist>
 </div>

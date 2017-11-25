@@ -1,7 +1,5 @@
-import { Component, ViewChild} from '@angular/core';
+import { Component, ViewChild, ElementRef} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {CreateNewAutocompleteGroup, SelectedAutocompleteItem, NgAutocompleteComponent} from "ng-auto-complete";
-
 
 @Component({
   selector: 'app-root',
@@ -11,45 +9,51 @@ import {CreateNewAutocompleteGroup, SelectedAutocompleteItem, NgAutocompleteComp
 
 
 export class AppComponent {
-  title: string = 'OSRSWebTicker';
-  apiRoot : string = "https://services.runescape.com"
-  alphaRoute : string = "/m=itemdb_oldschool/api/catalogue/items.json?category=1&alpha=";
-  pageRoute : string = "&page=1"
+  private title: string = 'OSRSWebTicker';
+  private apiRoot : string = "https://services.runescape.com"
+  private alphaRoute : string = "/m=itemdb_oldschool/api/catalogue/items.json?category=1&alpha=";
+  private pageRoute : string = "&page=1";
+  private itemNames : array = [];
 
-  @ViewChild(NgAutocompleteComponent) public completer: NgAutocompleteComponent;
-
-  private groupItems = [];
-  public group = [
-    CreateNewAutocompleteGroup(
-        'Item Name',
-        'completer',
-        [
-          {'title' : 'item',  id : 1}
-        ],
-        {titleKey: 'title', childrenKey: null}
-    ),
-  ];
+  @ViewChild('dataList')
+  private dataList : ElementRef;
 
   onKey(event: any){
-    if(event.target.value.length > 2){
+
+    var dataList = this.dataList.nativeElement;
+    var inpLength : integer = event.target.value.length;
+
+      var match = false;
+      for(var i in this.itemNames){
+        if(this.itemNames[i].toUpperCase().includes(event.target.value.toUpperCase())){
+          match = true;
+          break;
+        }
+      }
+      if(!match){
+
+        while(dataList.firstChild){
+          dataList.removeChild(dataList.firstChild);
+        };
+        this.itemNames = [];
         var url = this.apiRoot + this.alphaRoute + event.target.value + this.pageRoute;
         console.log(url);
-        console.log(this.http);
+        //console.log(this.searchElement);
         this.http.get(url).subscribe(data => {
-          var itemArray = [];
           for(var i in data.items){
-            itemArray.push({title : data.items[i].name, id : i});
+            var name = data.items[i].name;
+            if(!this.itemNames.includes(name)){
+              var element = document.createElement('OPTION');
+              this.itemNames.push(name);
+              element.value = name;
+              var value = document.createTextNode(name);
+              element.appendChild(value);
+              dataList.appendChild(element);
+            }
           }
-          this.group = [CreateNewAutocompleteGroup(
-                              'Item Name',
-                              'completer',
-                              itemArray,
-                              {titleKey: 'title', childrenKey: null}
-                          )];
-          console.log(this.groupItems);
-        })
-    };
-  }
+        });
+      }
+    }
 
   constructor(private http: HttpClient) {
 
