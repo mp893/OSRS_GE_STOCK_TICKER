@@ -14,6 +14,9 @@
      - Angular 5 web client
     
     ## Changelog:
+      - 1.0.4
+        - On demand auto-complete
+          - *bit too agressive on rest calls in this iteration*     
       - 1.0.3
         - Created skeleton for Angular 5 version
         - Set up and wired up basic rest service of web client version
