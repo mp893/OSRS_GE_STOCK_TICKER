@@ -25,36 +25,45 @@ export class AppComponent {
     let dataList = this.dataList.nativeElement;
     let inpLength : number = event.target.value.length;
 
-      let match : boolean = false;
-      for(var i in this.itemNames){
-        if(this.itemNames[i].toUpperCase().includes(event.target.value.toUpperCase())){
-          match = true;
-          break;
+      if(inpLength === 0){
+        this.itemNames = [];
+        this.clearDataList(dataList);
+      }
+      else {
+        let match : boolean = false;
+        for(var i in this.itemNames){
+          if(this.itemNames[i].toUpperCase().includes(event.target.value.toUpperCase())){
+            match = true;
+            break;
+          }
+        }
+        if(!match){
+          this.clearDataList(dataList);
+          this.itemNames = [];
+          let url : string = this.apiRoot + this.alphaRoute + event.target.value + this.pageRoute;
+          console.log(url);
+          this.http.get(url).subscribe((data : itemPayload) => {
+          console.log(data);
+            for(var i in data.items){
+              var name = data.items[i].name;
+              if(!this.itemNames.includes(name)){
+                let element = document.createElement('OPTION') as HTMLOptionElement;
+                this.itemNames.push(name);
+                element.value = name;
+                var value = document.createTextNode(name);
+                element.appendChild(value);
+                dataList.appendChild(element);
+              }
+            }
+          });
         }
       }
-      if(!match){
+    }
 
-        while(dataList.firstChild){
-          dataList.removeChild(dataList.firstChild);
-        };
-        this.itemNames = [];
-        let url : string = this.apiRoot + this.alphaRoute + event.target.value + this.pageRoute;
-        console.log(url);
-        //console.log(this.searchElement);
-        this.http.get(url).subscribe((data : itemPayload) => {
-          for(var i in data.getItems()){
-            var name = data.getItems()[i].getName();
-            if(!this.itemNames.includes(name)){
-              let element = document.createElement('OPTION') as HTMLOptionElement;
-              this.itemNames.push(name);
-              element.value = name;
-              var value = document.createTextNode(name);
-              element.appendChild(value);
-              dataList.appendChild(element);
-            }
-          }
-        });
-      }
+    clearDataList(dataList : any){
+      while(dataList.firstChild){
+        dataList.removeChild(dataList.firstChild);
+      };
     }
 
   constructor(private http: HttpClient) {

@@ -5,7 +5,6 @@ import {HttpClientModule} from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
-import {NgAutoCompleteModule} from "ng-auto-complete";
 
 
 @NgModule({
@@ -15,8 +14,7 @@ import {NgAutoCompleteModule} from "ng-auto-complete";
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule,
-    NgAutoCompleteModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
