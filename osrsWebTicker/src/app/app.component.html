@@ -7,8 +7,9 @@
 <div class="text_align pad_top" style="padding-top:20px">
   <label class="tital_font default_text"> Enter the name of a tradeable item</label>
   <div>
-    <input type="text" list="items" (keyup)="onKey($event)"/>
+    <input type="text" list="items" (input)="onKey($event)" (keypress)="validateInputChar($event)"/>
   </div>
-  <datalist #dataList id="items" >
+  <datalist id="items" >
+    <option *ngFor="let item of itemData" [ngValue]="item" [innerHTML]="item.name">
   </datalist>
 </div>

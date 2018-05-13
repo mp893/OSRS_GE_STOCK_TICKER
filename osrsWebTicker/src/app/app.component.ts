@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {itemPayload} from "../dataModel/itemPayload";
+import {item} from "../dataModel/item";
 
 @Component({
   selector: 'app-root',
@@ -15,58 +17,66 @@ export class AppComponent {
   private apiRoot : string = "https://services.runescape.com"
   private alphaRoute : string = "/m=itemdb_oldschool/api/catalogue/items.json?category=1&alpha=";
   private pageRoute : string = "&page=1";
-  private itemNames : string[] = [];
+  private timeout : any = null;
+  private itemData : item[] = [];
+  private pattern : RegExp = RegExp('[a-zA-z0-9\(\)\+\ ]');
 
   @ViewChild('dataList')
   private dataList : ElementRef;
 
   onKey(event: any){
+    clearTimeout(this.timeout);
 
-    let dataList = this.dataList.nativeElement;
-    let inpLength : number = event.target.value.length;
+    if(event.target.value.length === 0)
+      this.itemData = [];
+    else{
 
-      if(inpLength === 0){
-        this.itemNames = [];
-        this.clearDataList(dataList);
-      }
-      else {
-        let match : boolean = false;
-        for(var i in this.itemNames){
-          if(this.itemNames[i].toUpperCase().includes(event.target.value.toUpperCase())){
-            match = true;
-            break;
-          }
-        }
-        if(!match){
-          this.clearDataList(dataList);
-          this.itemNames = [];
-          let url : string = this.apiRoot + this.alphaRoute + event.target.value + this.pageRoute;
+      this.timeout = setTimeout(()=> {
+          console.log("Input Value:", event.target.value);
+
+          let url : string = this.apiRoot + this.alphaRoute + this.encodeString(event.target.value) + this.pageRoute;
           console.log(url);
-          this.http.get(url).subscribe((data : itemPayload) => {
-          console.log(data);
-            for(var i in data.items){
-              var name = data.items[i].name;
-              if(!this.itemNames.includes(name)){
-                let element = document.createElement('OPTION') as HTMLOptionElement;
-                this.itemNames.push(name);
-                element.value = name;
-                var value = document.createTextNode(name);
-                element.appendChild(value);
-                dataList.appendChild(element);
-              }
-            }
-          });
-        }
-      }
-    }
+          let found : boolean = false;
+          let targetUpper: string = event.target.value.toUpperCase();
 
-    clearDataList(dataList : any){
-      while(dataList.firstChild){
-        dataList.removeChild(dataList.firstChild);
-      };
+          for(var i in this.itemData){
+            let itemUpper : string = this.itemData[i].name.toUpperCase();
+            if(itemUpper === targetUpper){
+              console.log("Selected Item", this.itemData[i]);
+              found = true;
+              break;
+            }
+            else if(itemUpper.includes(targetUpper)){
+              found = true;
+              break;
+            }
+          }
+          if(!found){
+            this.http.get(url).subscribe((data : itemPayload) => {
+              this.itemData = data.items;
+            });
+          }
+      },600);
     }
+  }
+
+  validateInputChar(event: any){
+    let inputChar = String.fromCharCode(event.charCode);
+
+    if (!this.pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  displayItemDetails(itemDetails : item){
+    console.log(itemDetails);
+  };
+
+  encodeString(input : string){
+    return encodeURIComponent(input.toLowerCase());
+  }
+
 
   constructor(private http: HttpClient) {
-
   }
 }
